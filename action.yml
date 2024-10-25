@@ -1,0 +1,35 @@
+name: Plinko Documentation
+description: Generates Plinko documentation, a visual representation of the state machine
+inputs:
+  command:
+    description: 'Command to create plinko file'
+    required: true
+  dot-path:
+    description: 'Where to store DOT artifacts'
+    required: true
+    default: .plinko/plinko.dot
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-go@v5
+      with:
+        go-version: '1.16'
+    - name: Creating Plinko file
+      run: $COMMAND
+      shell: bash
+      env:
+        COMMAND: ${{ inputs.command }}
+
+    - name: Creating PNG
+      run: go run cmd/dot_to_png/main.go $DOT_PATH
+      shell: bash
+      env:
+        DOT_PATH: ${{ inputs.dot-path }}
+
+    - name: Commit PNG file
+      run: |
+        git config --global user.name ${{ github.actor }}
+        git config --global user.email '${{ github.actor }}@users.noreply.github.com'
+        git add .plinko/plinko.png
+        git commit -am "Plinko documentation"
+        git push
