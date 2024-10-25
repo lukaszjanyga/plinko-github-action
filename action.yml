@@ -23,7 +23,7 @@ runs:
       run: $COMMAND
       env:
         COMMAND: ${{ inputs.command }}
-
+    - uses: ts-graphviz/setup-graphviz@v2
     - name: Creating PNG
       shell: bash
       run: go run cmd/dot_to_png/main.go $DOT_PATH
