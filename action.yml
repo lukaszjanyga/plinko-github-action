@@ -15,18 +15,19 @@ runs:
       with:
         go-version: '1.16'
     - name: Creating Plinko file
-      run: $COMMAND
       shell: bash
+      run: $COMMAND
       env:
         COMMAND: ${{ inputs.command }}
 
     - name: Creating PNG
-      run: go run cmd/dot_to_png/main.go $DOT_PATH
       shell: bash
+      run: go run cmd/dot_to_png/main.go $DOT_PATH
       env:
         DOT_PATH: ${{ inputs.dot-path }}
 
     - name: Commit PNG file
+      shell: bash
       run: |
         git config --global user.name ${{ github.actor }}
         git config --global user.email '${{ github.actor }}@users.noreply.github.com'
