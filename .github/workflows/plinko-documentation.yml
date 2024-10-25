@@ -6,8 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Create report file
-        run: go run example_config.go
       - uses: ./
         with:
           command: go run cmd/example/main.go
