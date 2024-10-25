@@ -9,5 +9,9 @@ import (
 func main() {
 	fileName := os.Args[1]
 
-	renderers.DotFileToImg(fileName, ".plinko/plinko.png", "png")
+	err := renderers.DotFileToImg(fileName, ".plinko/plinko.png", "png")
+
+	if err != nil {
+		panic(err)
+	}
 }
